@@ -5,7 +5,7 @@ const ms = require('parse-ms');
  * Gets the remaining time a user has to wait to run daily, weekly, or monthly 
  * @param {string} userID ID of the user
  * @param {string} type Type of "paycheck" Daily, weekly, or monthly 
- * @param {import('../../types').EcoOptions} ops Guild id where user is
+ * @param {require('../../types').EcoOptions} ops Guild id where user is
  * @returns {object} Returns number of days/hours/minutes/seconds a user has to wait, all formatted in an object
  */
 module.exports = (userID, type = 'daily', ops = {}) => {

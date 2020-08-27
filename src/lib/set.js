@@ -4,7 +4,7 @@ const { set } = require('quick.db');
  * Set a user's balance to the amount
  * @param {string} userID ID of the user to add
  * @param {number} amount Amount to add to balance
- * @param {import('../../types').EcoOptions} ops ID of the guild where user is
+ * @param {require('../../types').EcoOptions} ops ID of the guild where user is
  * @returns {number} Updated balance for the user
  */
 module.exports = (userID, amount, ops = {}) => {

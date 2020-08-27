@@ -8,7 +8,7 @@
     
 | Website / Documentation | Discord Support *(25000+ Users)* | NPM Page |
 | :---: | :---: | :---: |
-| [Github repo](https://github.com/whomity/quick.eco) | [discord.gg/plexidev](https://discord.gg/plexidev) | [npmjs.com/package/disconomy](https://www.npmjs.com/package/disconomy)
+| [Website(https://disconomy.gitbook.io/disconomy/) | [discord.gg/plexidev](https://discord.gg/plexidev) | [npmjs.com/package/disconomy](https://www.npmjs.com/package/disconomy)
 </div>
 
 ---
