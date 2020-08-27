@@ -2,7 +2,7 @@ A simple utility wrapper for economy-related features using [quick.db](https://n
 
 ## Getting Started
 ```
-npm install whomity/discord.eco
+npm install disconomy
 ```
 
 ## Example usage
