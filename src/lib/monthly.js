@@ -3,7 +3,7 @@ const { add, get, set } = require('quick.db');
 /**
  * @param {string} userID Id of the user
  * @param {number} amount How much they should get per month
- * @param {import('../../types').EcoOptions?} ops Guild id where user is in
+ * @param {require('../../types').EcoOptions?} ops Guild id where user is in
  * @returns {boolean} Whether the user received their monthly amount
  */
 module.exports = (userID, amount, ops = {}) => {

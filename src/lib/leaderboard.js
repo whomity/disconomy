@@ -4,7 +4,7 @@ const { all } = require('quick.db');
  * Creates a leaderboard, sorted by users balance
  * @param {number?} limit Maximum amount of users in the leaderboard
  * @param {boolean?} reverse Whether to reverse the array from least to greatest
- * @param {import('../../types').EcoOptions} ops Guild id where to fetch the leaderboard
+ * @param {require('../../types').EcoOptions} ops Guild id where to fetch the leaderboard
  * @returns {Array<object>} Sorted array with a object containing user id and balance respectively
  */
 module.exports = (limit = 10, reverse = false, ops = {}) => {

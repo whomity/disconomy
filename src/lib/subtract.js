@@ -4,7 +4,7 @@ const { subtract } = require('quick.db');
  * Subtract an amount from a user
  * @param {string} userID User to subtract amount from
  * @param {number} amount Amount to subtract
- * @param {import('../../types').EcoOptions} 
+ * @param {require('../../types').EcoOptions} 
  * @returns {number} New balance of the user
  */
 module.exports = (userID, amount, ops = {}) => {

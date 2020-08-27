@@ -6,7 +6,7 @@ const balance = require('./balance');
  * @param {string} id_from User to take amount from
  * @param {string} id_to User to receive amount
  * @param {number} amount Amount
- * @param {import('../../types').EcoOptions} ops ID of the guild where the users are
+ * @param {require('../../types').EcoOptions} ops ID of the guild where the users are
  * @returns {boolean} If the transfer was completed successfully
  */
 module.exports = (id_from, id_to, amount, ops = {}) => {
