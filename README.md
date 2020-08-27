@@ -1,4 +1,4 @@
-![Quick.eco](https://i.imgur.com/D2edkc8.jpg)
+![discord.eco](https://i.imgur.com/Q9mK7Df.png)
 
 <div>
   <p>
