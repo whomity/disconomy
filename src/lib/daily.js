@@ -1,7 +1,6 @@
 const { add, get, set } = require('quick.db');
 
 /**
- * 
  * @param {string} userID Id of the user
  * @param {number} amount How much they should get per daily
  * @param {import('../../types').EcoOptions?} ops Guild id where user is in

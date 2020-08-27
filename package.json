@@ -1,5 +1,5 @@
 {
-  "name": "discord.eco",
+  "name": "disconomy",
   "version": "1.0.0",
   "description": "An extension for quick.db containing economy related features and methods.",
   "main": "./src/index.js",
@@ -28,5 +28,6 @@
   "bugs": {
     "url": "https://github.com/whomity/discord.eco/issues"
   },
-  "homepage": "https://github.com/whomity/discord.eco"
+  "homepage": "https://github.com/whomity/discord.eco",
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" }
 }
