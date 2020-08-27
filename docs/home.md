@@ -7,7 +7,7 @@ npm install disconomy
 
 ## Example usage
 ```js
-const db = require('discord.eco');
+const db = require('disconomy');
 
 // Retrieve balance of user with id: 313114429451665409
 console.log(db.balance('313114429451665409')); // 0
@@ -26,4 +26,4 @@ db.add('313114429451665409', 1000000, { guild: '343572980351107077' }); // 10000
 ```
 
 ## Contributing
-If you'd like to contribute to `discord.eco`, please consider forking the repo and creating a pull request. 
+If you'd like to contribute to `disconomy`, please consider forking the repo and creating a pull request. 
