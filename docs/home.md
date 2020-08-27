@@ -1,4 +1,4 @@
-A simple utility wrapper for economy-related features using [quick.db](https://npmjs.com/quick.db].
+A simple utility wrapper for economy-related features using [quick.db](https://npmjs.com/quick.db).
 
 ## Getting Started
 ```
