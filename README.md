@@ -1,14 +1,14 @@
-![Quick.eco](https://i.imgur.com/D2edkc8.jpg)
+![discord.eco](https://i.imgur.com/XnK9A9l.png)
 
 <div>
   <p>
     <a href="https://discord.gg/plexidev"><img src="https://discordapp.com/api/guilds/343572980351107077/embed.png" alt="Discord Server" /></a>
-    <a href="https://github.com/whomity/quick.eco/stargazers/"><img src="https://img.shields.io/github/stars/whomity/quick.eco.svg?style=social&label=Star"></a>
+    <a href="https://github.com/whomity/discord.eco/stargazers/"><img src="https://img.shields.io/github/stars/whomity/discord.eco?svg?style=social&label=Star"></a>
   </p>
     
 | Website / Documentation | Discord Support *(25000+ Users)* | NPM Page |
 | :---: | :---: | :---: |
-| [Github repo](https://github.com/whomity/quick.eco) | [discord.gg/plexidev](https://discord.gg/plexidev) | [npmjs.com/package/quick.db](https://www.npmjs.com/package/quick.db)
+| [Github repo](https://github.com/whomity/quick.eco) | [discord.gg/plexidev](https://discord.gg/plexidev) | [npmjs.com/package/disconomy](https://www.npmjs.com/package/disconomy)
 </div>
 
 ---
