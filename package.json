@@ -14,7 +14,7 @@
   "types": "./types/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/whomity/discord.eco.git"
+    "url": "git+https://github.com/whomity/disconomy/.git"
   },
   "keywords": [
     "db",
@@ -27,7 +27,7 @@
   "author": "whomity#9612",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/whomity/discord.eco/issues"
+    "url": "https://github.com/whomity/disconomy/issues"
   },
-  "homepage": "https://github.com/whomity/discord.eco"
+  "homepage": "https://github.com/whomity/disconomy/"
 }
