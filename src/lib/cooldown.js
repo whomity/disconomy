@@ -27,6 +27,9 @@ module.exports = (userID, type = 'daily', ops = {}) => {
             cooldown = 2.592e+9;
             break;
     }
+    
+    const duration = get(ops.guild ? `${type}_${ops.guild}_${userID}` : `${type}_${userID}`);
+    if (duration) return ms(cooldown - (Date.now() - duration));
 
-    return ms(cooldown - (Date.now() - get(ops.guild ? `${type}_${ops.guild}_${userID}` : `${type}_${userID}`)));
+    return false;
 }
