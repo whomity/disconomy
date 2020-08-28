@@ -1,6 +1,6 @@
 {
   "name": "disconomy",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "An extension for quick.db containing economy related features and methods.",
   "main": "./src/index.js",
   "dependencies": {
