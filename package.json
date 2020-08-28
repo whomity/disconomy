@@ -9,8 +9,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "node tests/index.js",
-    "docs": "./node_modules/.bin/jsdoc --configure jsdoc.json"
+    "test": "node tests/index.js"
   },
   "types": "./types/index.d.ts",
   "repository": {
