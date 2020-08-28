@@ -17,7 +17,7 @@ module.exports = (userID, amount, ops = {}) => {
     if (lastDaily && cooldown - (Date.now() - lastDaily) > 0) return false;
 
     set(ops.guild ? `daily_${ops.guild}_${userID}` : `daily_${userID}`, Date.now());
-    add(ops.guild ? `balance${ops.guild}_${userID}` : `balance_${userID}`, amount);
+    add(ops.guild ? `balance_${ops.guild}_${userID}` : `balance_${userID}`, amount);
 
     return true;
 }
