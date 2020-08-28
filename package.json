@@ -7,10 +7,7 @@
     "parse-ms": "^2.1.0",
     "quick.db": "^7.1.1"
   },
-  "devDependencies": {
-    "jsdoc": "^3.6.5",
-    "minami": "^1.2.3"
-  },
+  "devDependencies": {},
   "scripts": {
     "test": "node tests/index.js",
     "docs": "./node_modules/.bin/jsdoc --configure jsdoc.json"
