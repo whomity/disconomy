@@ -7,7 +7,7 @@ export interface EcoOptions {
 
 export type CooldownType = 'daily' | 'weekly' | 'monthly';
 
-declare module 'disconomys' {
+declare module 'disconomy' {
     function set(userID: string, amount: number, ops?: EcoOptions): number;
     function add(userID: string, amount: number, ops?: EcoOptions): number
     function subtract(userID: string, amount: number, ops?: EcoOptions): number;
