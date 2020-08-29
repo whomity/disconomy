@@ -9,3 +9,4 @@ watch.json
 .vs/
 package-lock.json
 node_modules/
+dist/

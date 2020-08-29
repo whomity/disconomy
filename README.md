@@ -18,6 +18,6 @@ An extension for [quick.db](https://github.com/plexidev/quick.db) containing eco
 ---
 
 Features: 
-- Simple and lightweight
+- Simple and easy to implement
 - Serves as a simple API to write economy-related commands
-- Typescript support (pretty cool right?) 
+- Built-in Typescript support
