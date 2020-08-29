@@ -186,6 +186,13 @@ export class Disconomy {
         return true;
     }
 
+    /**
+     * Gets the formatted string of a type of cooldown
+     * @param id ID of the user
+     * @param type Type of cooldown
+     * @param ops Options to factor when getting the cooldown
+     * @returns {string|false} If returned a string, then a cooldown exists. Otherwise, there is none.
+     */
     getCooldown(id: string, type: CooldownType = 'daily', ops: EcoOptions = {}): string | false {
         let cooldown: number = 8.64e+7;
         switch (type.toLowerCase()) {

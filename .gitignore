@@ -10,3 +10,4 @@ watch.json
 package-lock.json
 node_modules/
 dist/
+test/
