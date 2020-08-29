@@ -15,33 +15,29 @@ export class Disconomy {
     private monthlyAmount: number;
     public constructor(options: DisconomyOptions = {}) {
         /**
-         * @protected
-         * @default 150
+         * Amount to give per day
          * @type {Number}
-         * Amount to give per daily
+         * @default 150
          */
         this.dailyAmount = options.dailyAmount ?? 150;
 
         /**
-         * @private
-         * @default 500
-         * @type {number}
          * Amount to give per week
+         * @type {Number}
+         * @default 500
          */
         this.weeklyAmount = options.weeklyAmount ?? 500;
 
         /**
-         * @private
-         * @default 1500
-         * @type {number}
          * Amount to give per month
+         * @type {Number}
+         * @default 150
          */
         this.monthlyAmount = options.monthlyAmount ?? 1500;
 
         /**
-         * @public
+         * Current version of disconomy
          * @type {string}
-         * Verison of disconomy
          */
         this.version = require(join(process.cwd(), 'package.json')).version;
     }

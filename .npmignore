@@ -12,5 +12,5 @@ server.js
 .vs/
 .github/
 .package-lock.json
-dist/
 test/
+src/
