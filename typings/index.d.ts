@@ -13,7 +13,7 @@ declare module 'disconomy' {
     
     
     export class Disconomy {
-        public constructor(options: DisconomyOptions);
+        public constructor(options?: DisconomyOptions);
         protected version: string;
         private dailyAmount: number;
         private weeklyAmount: number;
