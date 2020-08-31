@@ -10,9 +10,9 @@ import { CooldownType } from "../types/CooldownType";
  */
 export class Disconomy {
     protected version: string;
-    protected dailyAmount: number;
-    protected weeklyAmount: number;
-    protected monthlyAmount: number;
+    public dailyAmount: number;
+    public weeklyAmount: number;
+    public monthlyAmount: number;
     public constructor(options: DisconomyOptions = {}) {
         /**
          * Amount to give per day

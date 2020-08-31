@@ -15,9 +15,9 @@ declare module 'disconomy' {
     export class Disconomy {
         public constructor(options?: DisconomyOptions);
         protected version: string;
-        protected dailyAmount: number;
-        protected weeklyAmount: number;
-        protected monthlyAmount: number;
+        public dailyAmount: number;
+        public weeklyAmount: number;
+        public monthlyAmount: number;
         protected buildKey(id: string, type: string, ops?: EcoOptions): string;
 
         public add(id: string, amount: number, ops?: EcoOptions): number;
