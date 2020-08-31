@@ -10,9 +10,9 @@ import { CooldownType } from "../types/CooldownType";
  */
 export class Disconomy {
     protected version: string;
-    private dailyAmount: number;
-    private weeklyAmount: number;
-    private monthlyAmount: number;
+    protected dailyAmount: number;
+    protected weeklyAmount: number;
+    protected monthlyAmount: number;
     public constructor(options: DisconomyOptions = {}) {
         /**
          * Amount to give per day
@@ -88,7 +88,7 @@ export class Disconomy {
         if (!/^[0-9]{16,19}$/.test(id)) throw new Error(`User id "${id}" does not match user-id regex.`);
 
         const key = this.buildKey(id, 'bal', ops);
-        if (!db.has(key)) this.set(key, 0, ops);
+        if (!db.has(key)) db.set(key, 0 as unknown as string, ops);
 
         return db.fetch(key);
     }
