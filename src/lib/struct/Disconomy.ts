@@ -241,8 +241,8 @@ export class Disconomy {
         if (amount < 0) throw new Error(`"${amount}" should be a positive number`);
         if (this.balance(id_from, ops) < amount) throw new Error(`"${id_from}" does not have enough to transfer "${amount}"`);
         
-        this.add(this.buildKey(id_to, 'bal', ops), amount);
-        this.subtract(this.buildKey(id_from, 'bal', ops), amount);
+        this.add(id_to, amount, ops);
+        this.subtract(id_from, amount, ops);
 
         return true;
     }
