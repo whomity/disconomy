@@ -1,23 +1,17 @@
-![disconomy](https://i.imgur.com/XnK9A9l.png)
+# Disconomy
 
-<div>
-  <p>
-    <a href='https://npmjs.org/disconomy'><img src='https://badgen.net/npm/v/disconomy' alt='Version' /></a>
-    <a href='https://badgen.net/npm/dt/disconomy'><img src='https://badgen.net/npm/dt/disconomy' alt='Downloads' /></a>
-    <a href="https://github.com/whomity/discord.eco/stargazers/"><img src="https://img.shields.io/github/stars/whomity/discord.eco?svg?style=social&label=Star"></a>
-    <a href="https://discord.gg/plexidev"><img src="https://discordapp.com/api/guilds/343572980351107077/embed.png" alt="Discord Server" /></a>
-  </p>
-    
-| Website / Documentation | Discord Support *(25000+ Users)* | NPM Page |
-| :---: | :---: | :---: |
-| [Website](https://disconomy.gitbook.io/disconomy/) | [discord.gg/plexidev](https://discord.gg/plexidev) | [npmjs.com/package/disconomy](https://www.npmjs.com/package/disconomy)
-</div>
+![!](https://nodei.co/npm/disconomy.png?downloads=true)
+![](https://img.shields.io/david/whomity/disconomy?style=for-the-badge)
+![](https://img.shields.io/npm/dt/disconomy?style=for-the-badge)
+![](https://forthebadge.com/images/badges/made-with-typescript.svg)
+![](https://forthebadge.com/images/badges/built-with-love.svg)
 
----
-An extension for [quick.db](https://github.com/plexidev/quick.db) containing economy related features and methods.
----
+----
 
-Features: 
-- Simple and easy to implement
-- Serves as a simple API to write economy-related commands
-- Built-in Typescript support
+**[Disconomy](https://npmjs.org/disconomy) provides a structure for new users to write economy-based features, built upon a popular manager [Quick.db](https://npmjs.org/quick.db).**
+
+----
+
+**Features**
+* Servers as a simple API to write economy-based commands.
+* Typescript Support
