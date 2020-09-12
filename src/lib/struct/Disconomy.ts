@@ -9,7 +9,7 @@ import { CooldownType } from "../types/CooldownType";
  * Represents our basic economy methods
  */
 export class Disconomy {
-    protected version: string;
+    public version: string;
     public dailyAmount: number;
     public weeklyAmount: number;
     public monthlyAmount: number;
@@ -257,6 +257,15 @@ export class Disconomy {
      */
     pay(id_from: string, id_to: string, amount: number, ops: EcoOptions = {}): boolean {
         return this.transfer(id_from, id_to, amount, ops);
+    }
+
+    /**
+     * Removes entry for a user in the database
+     * @param id ID of the user
+     * @param ops Options to factor when removing the entry
+     */
+    delete(id: string, ops: EcoOptions = {}): boolean {
+        return db.delete(this.buildKey(id, 'bal', ops));
     }
 
     /**

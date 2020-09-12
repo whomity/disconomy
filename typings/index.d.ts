@@ -11,7 +11,6 @@ declare module 'disconomy' {
     
     export type CooldownType = 'daily' | 'weekly' | 'monthly';
     
-    
     export class Disconomy {
         public constructor(options?: DisconomyOptions);
         protected version: string;
@@ -25,9 +24,10 @@ declare module 'disconomy' {
         public set(id: string, amount: number, ops?: EcoOptions): number;
         public subtract(id: string, amount: number, ops?: EcoOptions): number;
         public deduct(id: string, amount: number, ops?: EcoOptions): number;
-        public daily(id: string, ops?: EcoOptions): Boolean;
-        public weekly(id: string, ops?: EcoOptions): Boolean;
-        public monthly(id: string, ops?: EcoOptions): Boolean;
+        public delete(id: string, ops?: EcoOptions): boolean;
+        public daily(id: string, ops?: EcoOptions): boolean;
+        public weekly(id: string, ops?: EcoOptions): boolean;
+        public monthly(id: string, ops?: EcoOptions): boolean;
         public getCooldown(id: string, type?: CooldownType, ops?: EcoOptions): string | false;
         public resetCooldown(id: string, type?: CooldownType, ops?: EcoOptions): boolean;
         public transfer(id_from: string, id_to: string, amount: number, ops?: EcoOptions): boolean;
