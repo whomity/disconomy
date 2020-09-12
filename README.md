@@ -7,6 +7,9 @@
 
 **[Disconomy](https://npmjs.org/disconomy) provides a structure for new users to write economy-based features, built upon a popular manager [Quick.db](https://npmjs.org/quick.db).**
 
+**Documentation: https://whomity.github.io/disconomy/index.html**
+**Discord: https://discord.com/plexidev**
+
 ----
 
 **Features**
