@@ -13,5 +13,5 @@
 ----
 
 **Features**
-* Servers as a simple API to write economy-based commands.
+* Serves as a simple API to write economy-based commands.
 * Typescript Support
