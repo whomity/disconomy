@@ -1,4 +1,4 @@
-const { Disconomy } = require('disconomy');
+const { Disconomy } = require("../dist/");
 
 const db = new Disconomy();
 console.log(db.version);

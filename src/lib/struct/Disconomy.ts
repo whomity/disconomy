@@ -1,297 +1,188 @@
 import ms from "ms";
-import { join } from "path";
 import * as db from "quick.db";
-import { DisconomyOptions } from "../interfaces/DisconomyOptions";
-import { EcoOptions } from "../interfaces/EcoOptions";
-import { CooldownType } from "../types/CooldownType";
+import { DisconomyOptions, EcoOptions, CooldownType } from "../../";
 
-/**
- * Represents our basic economy methods
- */
+const bal = "bal";
+const daily = "daily";
+const weekly = "weekly";
+const monthly = "monthly";
+
+const cooldowns = new Map([
+  ["d", 8.64e7],
+  ["w", 6.048e8],
+  ["m", 2.592e9],
+]);
+
 export class Disconomy {
-    public version: string;
-    public dailyAmount: number;
-    public weeklyAmount: number;
-    public monthlyAmount: number;
-    public constructor(options: DisconomyOptions = {}) {
-        /**
-         * Amount to give per day
-         * @type {Number}
-         * @default 150
-         */
-        this.dailyAmount = options.dailyAmount ?? 150;
+  public version: string;
+  public dailyAmount: number;
+  public weeklyAmount: number;
+  public monthlyAmount: number;
+  public constructor(ops: DisconomyOptions = {}) {
+    this.dailyAmount = ops.dailyAmount ?? 150;
 
-        /**
-         * Amount to give per week
-         * @type {Number}
-         * @default 500
-         */
-        this.weeklyAmount = options.weeklyAmount ?? 500;
+    this.weeklyAmount = ops.weeklyAmount ?? 500;
 
-        /**
-         * Amount to give per month
-         * @type {Number}
-         * @default 150
-         */
-        this.monthlyAmount = options.monthlyAmount ?? 1500;
+    this.monthlyAmount = ops.monthlyAmount ?? 150;
 
-        /**
-         * Current version of disconomy
-         * @type {string}
-         */
-        this.version = require(join(process.cwd(), 'package.json')).version;
+    this.version = require("../../package.json");
+  }
+
+  private key(id: string, type: string, ops: EcoOptions = {}): string {
+    let key: string = "";
+    switch (type) {
+      case "bal":
+        key = `bal_${ops.guild ? `${ops.guild}_` : ""}${id}`;
+        break;
+      case daily:
+      case weekly:
+      case monthly:
+        key = `cooldowns_${ops.guild ? `${ops.guild}_` : ""}${id}.${type}`;
+        break;
     }
 
-    /**
-     * A simple method to create keys and simplify code
-     * @param id ID of the user
-     * @param type Type of key to build
-     * @param ops Options to factor when building a key
-     * @returns {string} Key that was built
-     */
-    protected buildKey(id: string, type: string, ops: EcoOptions = {}): string {
-        let key = '';
-        switch (type) {
-            case 'bal':
-            case 'balance':
-                key = ops.guild ? `bal_${ops.guild}_${id}` : `bal_${id}`;
-                break;
-            case 'daily':
-            case 'weekly':
-            case 'monthly':
-                key = ops.guild ? `cooldowns_${ops.guild}_${id}.${type}` : `cooldowns_${id}.${type}`;
-                break;
-        }
+    return key;
+  }
 
-        return key;
+  public add(id: string, amount: number, ops: EcoOptions = {}): number {
+    return db.add(this.key(id, "bal", ops), amount);
+  }
+
+  public balance(id: string, ops: EcoOptions = {}): number {
+    const key = this.key(id, bal, ops);
+    if (!db.has(key)) db.set(key, 0);
+
+    return db.fetch(key);
+  }
+
+  public set(id: string, amount: number, ops: EcoOptions = {}): number {
+    return db.set(this.key(id, bal, ops), amount);
+  }
+
+  public subtract(id: string, amount: number, ops: EcoOptions = {}): number {
+    return db.subtract(this.key(id, bal, ops), amount);
+  }
+
+  public deduct(id: string, amount: number, ops: EcoOptions = {}): number {
+    return this.subtract(id, amount, ops);
+  }
+
+  public daily(id: string, ops: EcoOptions = {}): boolean {
+    if (!db.fetch(this.key(id, daily, ops))) {
+      db.add(this.key(id, bal, ops), this.dailyAmount);
+      db.set(this.key(id, daily, ops), (Date.now() as unknown) as string);
+
+      return true;
     }
 
-    /**
-     * Add an amount to the user
-     * @param id ID of the user
-     * @param amount Amount to add
-     * @param ops Options to factor when adding amount
-     * @returns {Number} New balance of the user
-     */
-    add(id: string, amount: number, ops: EcoOptions = {}): number {
-        if (!/^[0-9]{16,19}$/.test(id)) throw new Error(`User id "${id}" does not match user-id regex.`);
-        return db.add(this.buildKey(id, 'bal', ops), amount);
+    return false;
+  }
+
+  public weekly(id: string, ops: EcoOptions = {}): boolean {
+    if (!db.fetch(this.key(id, weekly, ops))) {
+      db.add(this.key(id, bal, ops), this.weeklyAmount);
+      db.set(this.key(id, weekly, ops), (Date.now() as unknown) as string);
+
+      return true;
     }
 
-    /**
-     * Retrieves balance of a user
-     * @param id ID of the user
-     * @param ops Options to factor when retrieving balance
-     * @returns {Number} Balance of the user
-     */
-    balance(id: string, ops: EcoOptions = {}): number {
-        if (!/^[0-9]{16,19}$/.test(id)) throw new Error(`User id "${id}" does not match user-id regex.`);
+    return false;
+  }
 
-        const key = this.buildKey(id, 'bal', ops);
-        if (!db.has(key)) db.set(key, 0 as unknown as string, ops);
+  public monthly(id: string, ops: EcoOptions = {}): boolean {
+    if (!db.fetch(this.key(id, monthly, ops))) {
+      db.add(this.key(id, bal, ops), this.monthlyAmount);
+      db.set(this.key(id, monthly, ops), (Date.now() as unknown) as string);
 
-        return db.fetch(key);
+      return true;
     }
 
-    /**
-     * Set a user's balance to the given amount
-     * @param id ID of the user
-     * @param amount Amount to set
-     * @param ops Options to factor when setting balance
-     */
-    set(id: string, amount: number, ops: EcoOptions = {}): number {
-        return db.set(this.buildKey(id, 'bal', ops), amount as unknown as string);
-    }
+    return false;
+  }
 
-    /**
-     * Subtract an amount from a user's balance
-     * @param id ID of the user
-     * @param amount Amount to subtract
-     * @param ops Options to factor when subtracting balance
-     * @returns {Number} New balance of the user
-     */
-    subtract(id: string, amount: number, ops: EcoOptions = {}): number {
-        if (!/^[0-9]{16,19}$/.test(id)) throw new Error(`User id "${id}" does not match user-id regex.`);
-        return db.subtract(this.buildKey(id, 'bal', ops), amount);
-    }
+  public cooldown(
+    id: string,
+    type: CooldownType = daily,
+    ops: EcoOptions = {}
+  ): string {
+    const cooldown: number = cooldowns.get(type.charAt(0))!;
+    const duration = db.get(this.key(id, type, ops));
 
-    /**
-     * An alias for Controller.subtract()
-     * @param id ID of the user
-     * @param amount Amount to deduct
-     * @param ops Options to factor when deducting amount from balance
-     * @returns {Number} New balance of the user
-     */
-    deduct(id: string, amount: number, ops: EcoOptions = {}) {
-        return this.subtract(id, amount, ops);
-    }
+    return ms(duration ? cooldown - (Date.now() - duration) : 0, {
+      long: true,
+    });
+  }
 
-    /**
-     * Adds the daily amount to the user
-     * @param id ID of the user
-     * @param ops Options to factor when adding daily amount
-     * @returns {Boolean} Whether the user received their daily amount
-     */
-    daily(id: string, ops: EcoOptions = {}): Boolean {
-        if (!/^[0-9]{16,19}$/.test(id)) throw new Error(`User id "${id}" does not match user-id regex.`);
+  public reset(
+    id: string,
+    type: CooldownType = daily,
+    ops: EcoOptions = {}
+  ): boolean {
+    if (!db.has(this.key(id, type, ops))) return false;
 
-        const cooldown = 8.64e+7;
-        const lastDaily = db.fetch(this.buildKey(id, 'daily', ops));
+    db.set(this.key(id, type, ops), null);
+    return true;
+  }
 
-        if (lastDaily && cooldown - (Date.now() - lastDaily) > 0) return false;
+  public transfer(
+    id_from: string,
+    id_to: string,
+    amount: number,
+    ops: EcoOptions = {}
+  ): boolean {
+    if (amount < 0) throw new Error(`"${amount}" should be a positive number`);
+    if (this.balance(id_from, ops) < amount)
+      throw new Error(
+        `"${id_from}" does not have enough to transfer "${amount}"`
+      );
 
-        db.add(this.buildKey(id, 'bal', ops), this.dailyAmount);
-        db.set(this.buildKey(id, 'daily', ops), Date.now() as unknown as string);
+    this.add(id_to, amount, ops);
+    this.subtract(id_from, amount, ops);
 
-        return true;
-    }
+    return true;
+  }
 
-    /**
-     * Adds the weekly amount to a user
-     * @param id ID of the user
-     * @param ops Options to factor when adding weekly amount
-     * @returns {Boolean} Whether the user received their weekly amount
-     */
-    weekly(id: string, ops: EcoOptions = {}): Boolean {
-        if (!/^[0-9]{16,19}$/.test(id)) throw new Error(`User id "${id}" does not match user-id regex.`);
+  public pay(
+    id_from: string,
+    id_to: string,
+    amount: number,
+    ops: EcoOptions = {}
+  ): boolean {
+    return this.transfer(id_from, id_to, amount, ops);
+  }
 
-        const cooldown = 6.048e+8;
-        const lastWeekly = db.fetch(this.buildKey(id, 'weekly', ops));
+  public delete(id: string, ops: EcoOptions = {}): boolean {
+    return db.delete(this.key(id, "bal", ops));
+  }
 
-        if (lastWeekly && cooldown - (Date.now() - lastWeekly) > 0) return false;
+  public clear(id: string, ops: EcoOptions = {}): boolean {
+    return this.delete(id, ops);
+  }
 
-        db.add(this.buildKey(id, 'bal', ops), this.weeklyAmount);
-        db.set(this.buildKey(id, 'weekly', ops), Date.now() as unknown as string);
+  public leaderboard(
+    limit: number = 10,
+    reverse: boolean = false,
+    ops: EcoOptions = {}
+  ): { id: string; balance: string }[] {
+    const data = db
+      .all()
+      .filter((c) =>
+        c.ID.startsWith(bal) && ops.guild
+          ? c.ID.split("_")[1] === ops.guild
+          : true
+      );
 
-        return true;
-    }
+    data.length = limit;
+    data.sort((a, b) => (reverse ? a.data - b.data : b.data - a.data));
 
-    /**
-     * Adds the monthly amount to a user
-     * @param id ID of the user
-     * @param ops Options to factor when adding monthly amount
-     * @returns {Boolean} Whether the user received their monthly amount
-     */
-    monthly(id: string, ops: EcoOptions = {}): Boolean {
-        if (!/^[0-9]{16,19}$/.test(id)) throw new Error(`User id "${id}" does not match user-id regex.`);
+    const res: { id: string; balance: string }[] = [];
+    data.forEach((k) => {
+      res.push({
+        id: k.ID.split("_")[ops.guild ? 2 : 1],
+        balance: JSON.parse(k.data),
+      });
+    });
 
-        const cooldown = 2.592e+9;
-        const lastMonthly = db.fetch(this.buildKey(id, 'monthly', ops));
-
-        if (lastMonthly && cooldown - (Date.now() - lastMonthly) > 0) return false;
-
-        db.add(this.buildKey(id, 'bal', ops), this.monthlyAmount);
-        db.set(this.buildKey(id, 'monthly', ops), Date.now() as unknown as string);
-
-        return true;
-    }
-
-    /**
-     * Gets the formatted string of a type of cooldown
-     * @param id ID of the user
-     * @param type Type of cooldown
-     * @param ops Options to factor when getting the cooldown
-     * @returns {string|false} If returned a string, then a cooldown exists. Otherwise, there is none.
-     */
-    getCooldown(id: string, type: CooldownType = 'daily', ops: EcoOptions = {}): string | false {
-        let cooldown: number = 8.64e+7;
-        switch (type.toLowerCase()) {
-            case 'weekly':
-                cooldown = 6.048e+8;
-                break;
-            case 'monthly':
-                cooldown = 2.592e+9;
-                break;
-        }
-
-        const duration = db.get(this.buildKey(id, type, ops));
-        if (duration) return ms(cooldown - (Date.now() - duration), { long: true });
-
-        return false;
-    }
-
-    /**
-     * Reset a user's cooldown for that type
-     * @param id ID of the user
-     * @param type Type of cooldown
-     * @param ops Options to factor when resetting cooldown
-     * @returns {boolean} Whether the cooldown was reset successfully
-     */
-    resetCooldown(id: string, type: CooldownType = 'daily', ops: EcoOptions = {}): boolean {
-        if (!/^[0-9]{16,19}$/.test(id)) throw new Error(`User id "${id}" does not match user-id regex.`);
-
-        if (!db.has(this.buildKey(id, type, ops))) return false;
-
-        db.set(this.buildKey(id, type, ops), null as unknown as string);
-        return true;
-    }
-
-    /**
-     * Transfers an amount from one user to another
-     * @param id_from ID to take balance from
-     * @param id_to ID to transfer balance to
-     * @param amount Amount to transfer
-     * @param ops Options to factor when transferring the amount
-     * @returns {boolean} Whether the transfer was successful
-     */
-    transfer(id_from: string, id_to: string, amount: number, ops: EcoOptions = {}): boolean {
-        if (!/^[0-9]{16,19}$/.test(id_from)) throw new Error(`User id "${id_from}" does not match user-id regex.`);
-        if (!/^[0-9]{16,19}$/.test(id_to)) throw new Error(`User id "${id_to} does not match user-id regex.`);
-
-        if (amount < 0) throw new Error(`"${amount}" should be a positive number`);
-        if (this.balance(id_from, ops) < amount) throw new Error(`"${id_from}" does not have enough to transfer "${amount}"`);
-        
-        this.add(id_to, amount, ops);
-        this.subtract(id_from, amount, ops);
-
-        return true;
-    }
-
-    /**
-     * Serves as an alias for Disconomy.transfer()
-     * @param id_from ID to take balance from
-     * @param id_to ID to transfer balance to
-     * @param amount Amount to transfer
-     * @param ops Options to factor when transferring the amount
-     * @returns {boolean} Whether the transfer was successful
-     */
-    pay(id_from: string, id_to: string, amount: number, ops: EcoOptions = {}): boolean {
-        return this.transfer(id_from, id_to, amount, ops);
-    }
-
-    /**
-     * Removes entry for a user in the database
-     * @param id ID of the user
-     * @param ops Options to factor when removing the entry
-     */
-    delete(id: string, ops: EcoOptions = {}): boolean {
-        return db.delete(this.buildKey(id, 'bal', ops));
-    }
-
-    /**
-     * Creates a leaderboard, sorted by sorted user balances
-     * @param limit Max number of users on the leaderboard
-     * @param reverse If set to true, goes in least to greatest and vice-versa
-     * @param ops Options to factor when creating the leaderboard
-     * @returns {object[]} Leaderboard sorted by user balances
-     */
-    buildLeaderboard(limit: number = 10, reverse: boolean = false, ops: EcoOptions = {}): object[] {
-        const data = db.all().filter(c =>
-            ops.guild ? c.ID.startsWith('bal') && c.ID.split('_')[1] === ops.guild : 
-            c.ID.startsWith('bal'));
-
-        data.length = limit;
-        data.sort((a, b) => reverse ? a.data - b.data : b.data - a.data);
-
-        const resp: object[] = [];
-        data.forEach(k => {
-            if (!k) return;
-            resp.push({
-                id: k.ID.split('_')[ops.guild ? 2 : 1],
-                balance: JSON.parse(k.data)
-            });
-        });
-
-        return resp;
-    }
+    return res;
+  }
 }

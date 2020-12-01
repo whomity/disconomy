@@ -1,8 +1,5 @@
-/**
- * Represents the options a method can take
- * @property guild Guild id to factor when using a method
- * @type {Object}
- */
-export interface EcoOptions {
-    guild?: string,
-};
+import { Options } from "quick.db";
+
+export interface EcoOptions extends Options {
+  guild?: string;
+}
